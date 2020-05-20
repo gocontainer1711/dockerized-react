@@ -1,0 +1,33 @@
+version: "3.5"
+services:
+    web: 
+        build: 
+            context: .
+            dockerfile: Dockerfile.dev
+        stdin_open: true # create react app bug ?
+        restart: 'on-failure'
+        ports:
+            -
+                target: 3000
+                published: 8080
+        volumes:
+            -
+             type: volume
+             target: /usr/app/node_modules
+            -  
+             type: bind
+             target: /usr/app
+             source: .
+    test: 
+        build: 
+            context: .
+            dockerfile: Dockerfile.dev
+        volumes:
+            -
+                type: volume
+                target: /usr/app/node_modules
+            -
+                type: bind
+                target: /usr/app
+                source: .
+        command: ["test"]
