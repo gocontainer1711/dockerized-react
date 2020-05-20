@@ -1,0 +1,12 @@
+sudo: required
+language: generic
+
+services:
+  - docker
+
+before_install:
+  - docker image build -f Dockerfile.dev -t gocontainer:fe .
+
+
+script:
+  - docker run -e CI=true gocontainer:fe test
